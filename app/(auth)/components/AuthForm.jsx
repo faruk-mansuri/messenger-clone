@@ -104,7 +104,7 @@ const AuthForm = () => {
     if (session?.status === 'authenticated') {
       router.push('/users');
     }
-  }, [session]);
+  }, [session, router]);
 
   return (
     <div className='mt-8 mx-auto w-full max-w-md shadow-lg'>
