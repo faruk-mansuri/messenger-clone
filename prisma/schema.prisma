@@ -10,7 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String?
@@ -62,7 +61,7 @@ model Conversation{
   messages Message[]
 
   userIds String[] @db.ObjectId
-  user User[] @relation(fields: [userIds],references: [id])
+  users User[] @relation(fields: [userIds],references: [id])
 }
 
 model Message{
@@ -71,13 +70,12 @@ model Message{
     image String?
     createdAt DateTime @default(now())
 
-    sendIds String[] @db.ObjectId
-    seen User[] @relation("Seen", fields: [sendIds],references: [id])
+    seenIds String[] @db.ObjectId
+    seen User[] @relation("Seen", fields: [seenIds],references: [id])
 
     conversationId String @db.ObjectId
     conversation Conversation @relation(fields: [conversationId],references: [id], onDelete: Cascade)
 
     senderId String @db.ObjectId
     sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
-
 }
