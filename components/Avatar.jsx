@@ -1,6 +1,10 @@
+import { useActiveList } from '@/app/hooks/useActiveList';
 import Image from 'next/image';
 
 const Avatar = ({ user }) => {
+  const { members } = useActiveList();
+  const isActive = members.indexOf(user?.email) !== -1;
+
   return (
     <div className='relative'>
       <div
@@ -22,8 +26,9 @@ const Avatar = ({ user }) => {
         />
       </div>
 
-      <span
-        className='
+      {isActive && (
+        <span
+          className='
             absolute 
             block 
             rounded-full 
@@ -37,7 +42,8 @@ const Avatar = ({ user }) => {
             md:h-3 
             md:w-3
           '
-      />
+        />
+      )}
     </div>
   );
 };

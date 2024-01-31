@@ -21,6 +21,7 @@ import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import AvatarGroup from '@/components/AvatarGroup';
+import { useActiveList } from '@/app/hooks/useActiveList';
 
 const ProfileDrawer = ({ conversation }) => {
   const router = useRouter();
@@ -29,9 +30,14 @@ const ProfileDrawer = ({ conversation }) => {
 
   const otherUser = useOtherUser(conversation);
 
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email) !== -1;
+
   const statusText = conversation.isGroup
     ? `${conversation.users.length} members`
-    : 'Active';
+    : isActive
+    ? 'Active'
+    : 'Offline';
 
   const joinedDate = format(new Date(otherUser.createdAt), 'PP');
   const title = conversation.name || otherUser.name;
